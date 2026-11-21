@@ -1,5 +1,5 @@
 const PREFIX = 'wordcollector-eval-electric-machines-static-';
-const CACHE_NAME = PREFIX + '20261120-list-scroll';
+const CACHE_NAME = PREFIX + '20261120-list-scroll-api-v3';
 const APP_SHELL = [
   "_1/code.html",
   "_2/code.html",
