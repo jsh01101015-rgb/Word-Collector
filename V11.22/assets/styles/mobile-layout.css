@@ -1,0 +1,242 @@
+/* Shared layout corrections for the live app pages. Keep headers in flow so
+   device safe areas are included without a second, hard-coded top offset. */
+[hidden] { display: none !important; }
+body[data-page] { min-width: 0; }
+body[data-page="home"], body[data-page="bookmarks"] { min-height: 100dvh; }
+body[data-page]:not([data-page="card"]):not([data-page="backup"]) > header {
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+}
+body[data-page]:not([data-page="card"]) > main { padding-top: 0; }
+body[data-page="capture"] { min-height: 0; }
+body[data-page="home"] > main,
+body[data-page="words"] > main,
+body[data-page="bookmarks"] > main {
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+body[data-page] main { min-width: 0; }
+body[data-page] header button { flex-shrink: 0; }
+body[data-page="edit"] header > div > div:first-child,
+body[data-page="edit"] header > div > div:first-child > div { min-width: 0; }
+body[data-page="edit"] header > div > div:last-child { flex-shrink: 0; }
+body[data-page="edit"] header h1 { overflow-wrap: anywhere; }
+
+/* User-entered words and formulas must wrap inside the card, including
+   strings without spaces. Horizontal filter strips remain independently scrollable. */
+#term-list [data-field], #subjectGroups, #exportStatus,
+body[data-page="edit"] main, body[data-page="capture"] main {
+  overflow-wrap: anywhere;
+}
+#term-list [data-field="en"] { max-width: 100%; }
+#term-list [data-field="formula"], #term-list [data-field="pron"] {
+  min-width: 0;
+  max-width: 100%;
+}
+#subjectGroups label > span { min-width: 0; }
+#subjectGroups input, #exportContent input[type="checkbox"] { flex-shrink: 0; }
+#exportContent section > .flex.justify-between,
+#exportContent section.flex.justify-between,
+#exportContent section > div > .flex.justify-between {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#exportContent .grid > label { min-width: 0; overflow-wrap: anywhere; }
+
+/* Keep notebook names compact in the deck toolbar; full names remain in the
+   notebook settings. Counters keep their own space. */
+.deck-summary { gap: 8px; }
+.deck-summary > :first-child { flex: 1; min-width: 0; }
+.deck-summary > :last-child { flex-shrink: 0; }
+#subjectBadgeKr, #subjectBadgeEn {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#subjectBadgeKr { flex: 1; }
+#subjectBadgeEn { max-width: 40%; }
+#subjectBadgeEn:empty { display: none; }
+#topActiveCounter { white-space: nowrap; }
+#cardsScrollContainer { right: 16px; }
+.card-front, .card-back { overflow-wrap: anywhere; }
+.card-front [data-field], .card-back [data-field] { min-width: 0; max-width: 100%; }
+.card-front [data-field="en"], .card-back [data-field="en"] { flex: 1; }
+.card-front [data-field="counter"], .card-back [data-field="counter"] {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.card-front .flex.items-baseline, .card-back .flex.items-baseline { gap: 8px; }
+
+/* Native dialogs sit above navigation and scroll within the usable viewport,
+   including short landscape screens and a reduced keyboard viewport. */
+body[data-page] dialog {
+  box-sizing: border-box;
+  max-height: calc(100vh - 2rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  max-height: calc(100dvh - 2rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  top: env(safe-area-inset-top, 0px);
+  bottom: env(safe-area-inset-bottom, 0px);
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  overscroll-behavior: contain;
+}
+body[data-page] dialog input { min-width: 0; max-width: 100%; }
+body[data-page] dialog button { min-height: 44px; }
+body[data-page="backup"] header { padding-top: calc(18px + env(safe-area-inset-top, 0px)); }
+body[data-page="backup"] main { padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); }
+body[data-page="backup"] .panel { overflow-wrap: anywhere; }
+body[data-page="backup"] .panel > button { margin-bottom: 8px; }
+body[data-page="card"] > main > .deck-layout { grid-template-columns: minmax(0, 1fr); }
+.deck-summary, .deck-stage { min-width: 0; }
+.card-front > :first-child > :first-child > :first-child {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.card-front > :first-child > :first-child > :first-child > :last-child {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.card-front .flex.items-baseline, .card-back .flex.items-baseline { flex-wrap: wrap; }
+.card-front [data-field="en"], .card-back [data-field="en"] { flex-basis: 12rem; }
+/* Capture scrolls inside main, below the in-flow header. Large viewport-based
+   scroll margins would push focused inputs back underneath that header. */
+#analysis-review { scroll-margin-block: 8px; }
+/* Field captions and their badges need a second row when both cannot fit. */
+body[data-page="edit"] main .flex.justify-between,
+body[data-page="capture"] main .flex.justify-between {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+body[data-page="capture"] main label,
+#section-mode-ai .whitespace-nowrap { white-space: normal; }
+
+/* Home: the backup link sits inside the header row instead of on its own
+   line below the title. */
+.wc-header-link {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 9999px;
+  background: #eaedff;
+  color: #00236f;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+body[data-page="home"] header > div > div:first-child { min-width: 0; }
+#create-notebook { gap: 6px; white-space: nowrap; flex-shrink: 0; }
+
+/* Long notebook names and headwords: two lines instead of a one-line cut. */
+body[data-page="home"] main h2,
+#term-list [data-field="en"] {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Flashcard: the "수식" caption next to a formula must not break into one
+   letter per line; caption spans that carry data are left free to wrap. */
+body[data-page="card"] :has(> span.uppercase.tracking-wider:not([data-field])) {
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+body[data-page="card"] span.uppercase.tracking-wider:not([data-field]) { white-space: nowrap; }
+
+/* Flashcard back: the AI photo panel is created in app.js with utility
+   classes that the precompiled flashcard CSS does not contain. */
+body[data-page="card"] section:has(> [data-action="generate-photo"]) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+}
+body[data-page="card"] [data-action="generate-photo"] {
+  align-self: flex-start;
+  max-width: 100%;
+  min-height: 40px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  background: #00236f;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: left;
+}
+body[data-page="card"] [data-action="generate-photo"]:disabled { opacity: .6; }
+
+/* Edit: text must not run under the speaker / dropdown icons, and the
+   definition and example boxes grow so sentences are never cut off. */
+#englishTermInput { padding-right: 44px; text-overflow: ellipsis; }
+#subjectSelect { padding-right: 40px; text-overflow: ellipsis; }
+body[data-page="edit"] textarea { field-sizing: content; min-height: 72px; }
+
+/* Animate the visible surface without changing card sizing or scroll containers. */
+.card-flipper { transform-origin: center; }
+#cardsScrollContainer:focus-visible { outline: 2px solid #00236f; outline-offset: -2px; }
+
+/* Flashcard header (both faces): no front/back toggle; the 수정 and 저장
+   buttons stay on one line in the top-right corner, also on the back where
+   the title is longer. The title shrinks with an ellipsis instead. */
+body[data-page="card"] :is(.card-front, .card-back) > :first-child > :first-child > :first-child {
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+body[data-page="card"] :is(.card-front, .card-back) > :first-child > :first-child > :first-child > :first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+body[data-page="card"] :is(.card-front, .card-back) > :first-child > :first-child > :first-child > :first-child > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body[data-page="card"] :is(.card-front, .card-back) > :first-child > :first-child > :first-child > :last-child {
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  margin-left: auto;
+  gap: 6px;
+}
+
+/* The analysis overlay fills the viewport; its inner card scrolls inside the
+   safe area even in landscape or with the keyboard open. */
+body[data-page] #analysis-waiting {
+  top: 0; bottom: 0; max-height: 100%; overflow: hidden;
+}
+
+body[data-capture-step="review"] #analysis-status:empty { display: none; }
+body[data-capture-step="review"] main { scroll-padding-block: 8px; }
+@media (max-height: 450px) {
+  body[data-capture-step="review"] > header > div { height: 48px; }
+  body[data-capture-step="review"] #analysis-action-bar { padding: 8px 16px; }
+}
+
+/* Review: 단어 / 정의 / 예문 boxes (same order, grouped for reading). */
+body[data-capture-step="review"] .review-group {
+  margin: 0; min-width: 0; padding: 10px 12px 12px;
+  border: 1px solid rgba(117, 119, 128, .28); border-radius: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+body[data-capture-step="review"] .review-group > legend {
+  padding: 0 6px; font-weight: 600; font-size: 13px; color: #00236f;
+}
+
+/* 의미 기준 has three buttons (일반 의미 / 전공 의미 / 전공 모름): on the narrowest phones the
+   icons are hidden so every label fits on one line. */
+@media (max-width: 359px) {
+  #meaning-mode-section [role="group"] .material-symbols-outlined { display: none; }
+}
+
+/* Review screen: no empty status line above the result (the text is cleared after analysis). */
+body[data-capture-step="review"] #analysis-status:empty { display: none; }
